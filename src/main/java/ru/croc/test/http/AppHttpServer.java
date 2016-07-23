@@ -36,6 +36,8 @@ public class AppHttpServer {
         routes.put("/upload", new UploadHttpHandler());
         routes.put("/css", new StaticHttpHandler());
         routes.put("/js", new StaticHttpHandler());
+        routes.put("/fonts", new StaticHttpHandler());
+        routes.put("/img", new StaticHttpHandler());
         port = Integer.parseInt(getConfigurationService().get("server.port"));
     }
 

@@ -13,6 +13,7 @@
         <java.compiler.version>1.6</java.compiler.version>
         <app.main.class>ru.croc.test.AsposeTest</app.main.class>
         <google.guava.version>19.0</google.guava.version>
+        <commons.fileupload.version>1.3.2</commons.fileupload.version>
         <maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
         <maven.jar.plugin.version>3.0.2</maven.jar.plugin.version>
         <appassembler.maven.plugin.version>1.10</appassembler.maven.plugin.version>
@@ -24,7 +25,11 @@
             <artifactId>guava</artifactId>
             <version>${google.guava.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>${commons.fileupload.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

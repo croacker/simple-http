@@ -13,11 +13,23 @@ public class UploadHttpHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+        if(httpExchange.getRequestMethod().equals("POST")){
+            uploadFile(httpExchange);
+        }else {
+            addError(httpExchange);
+        }
+    }
+
+    private void addError(HttpExchange httpExchange) throws IOException {
         String response = "Upload file!";
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
+    }
+
+    private void uploadFile(HttpExchange httpExchange){
+        httpExchange.getRequestMethod().equals("POST");
     }
 
 }
