@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import ru.croc.test.util.StringUtil;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Map;
 import java.util.Properties;
 
@@ -13,13 +12,15 @@ import java.util.Properties;
  */
 public class ConfigurationService{
 
-    public static final String APP_PROPERTIES = "application.properties";
-
-    public static final String DEFAULT_VALUE = StringUtil.EMPTY;
+    public static final String APP_PROPERTIES = "/application.properties";
 
     private static ConfigurationService instance;
 
     private Map<String, String> properties;
+
+    private ResourceService getResourceService(){
+        return ResourceService.getInstance();
+    }
 
     public static ConfigurationService getInstance() {
         if(instance == null){
@@ -30,21 +31,17 @@ public class ConfigurationService{
     }
 
     public void init(){
-        Maps.fromProperties(getProperties());
+        properties = Maps.fromProperties(getProperties());
     }
 
     private Properties getProperties(){
         Properties properties = new Properties();
         try {
-            properties.load(getResource());
+            properties.load(getResourceService().get(APP_PROPERTIES));
         } catch (IOException e) {
             Log.getInstance().log(e);
         }
         return properties;
-    }
-
-    private InputStream getResource(){
-        return getClass().getResourceAsStream(APP_PROPERTIES);
     }
 
     public String get(String key){
