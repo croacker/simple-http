@@ -21,7 +21,7 @@ public class HtmlService {
     }
 
     public InputStream getIndex(){
-        return getResourceService().get("/view/index.html");
+        return getResourceService().get("/view/file-upload-page.html");
     }
 
 }
