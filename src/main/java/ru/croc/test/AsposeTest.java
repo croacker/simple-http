@@ -11,7 +11,7 @@ import com.sun.net.httpserver.HttpServer;
 /**
  *
  */
-public class MainCls {
+public class AsposeTest {
 
     public static void main(String[] args) throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
