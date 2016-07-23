@@ -1,22 +1,15 @@
 package ru.croc.test.service;
 
 import org.apache.commons.io.FileUtils;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 
 /**
  *
  */
+@Service
 public class AsposeService {
-
-    private static AsposeService instance;
-
-    public static AsposeService getInstance() {
-        if(instance == null){
-            instance = new AsposeService();
-        }
-        return instance;
-    }
 
     private ConfigurationService getConfigurationService(){
         return ConfigurationService.getInstance();

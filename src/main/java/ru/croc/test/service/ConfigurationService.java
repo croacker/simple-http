@@ -1,8 +1,11 @@
 package ru.croc.test.service;
 
 import com.google.common.collect.Maps;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import ru.croc.test.util.StringUtil;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
@@ -10,6 +13,7 @@ import java.util.Properties;
 /**
  *
  */
+@Service @Slf4j
 public class ConfigurationService{
 
     public static final String APP_PROPERTIES = "/application.properties";
@@ -35,6 +39,7 @@ public class ConfigurationService{
         return instance;
     }
 
+    @PostConstruct
     public void init(){
         properties = Maps.fromProperties(getProperties());
     }
@@ -44,7 +49,7 @@ public class ConfigurationService{
         try {
             properties.load(getResourceService().get(APP_PROPERTIES));
         } catch (IOException e) {
-            Log.getInstance().log(e);
+            log.error(e.getMessage(), e);
         }
         return properties;
     }

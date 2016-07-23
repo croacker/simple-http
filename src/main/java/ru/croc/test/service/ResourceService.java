@@ -1,10 +1,13 @@
 package ru.croc.test.service;
 
+import org.springframework.stereotype.Service;
+
 import java.io.InputStream;
 
 /**
  *
  */
+@Service
 public class ResourceService{
 
     private static ResourceService instance;

@@ -3,7 +3,7 @@ package ru.croc.test.util;
 import com.google.common.base.Strings;
 
 /**
- * Created by user on 23.07.2016.
+ *
  */
 public class StringUtil {
 

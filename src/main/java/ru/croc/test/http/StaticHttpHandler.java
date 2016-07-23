@@ -2,6 +2,10 @@ package ru.croc.test.http;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.croc.test.service.ResourceService;
 
 import java.io.IOException;
@@ -11,16 +15,18 @@ import java.io.OutputStream;
 /**
  *
  */
+@Component
+@Slf4j
 public class StaticHttpHandler implements HttpHandler {
 
-    private ResourceService getResourceService(){
-        return ResourceService.getInstance();
-    }
+    @Autowired @Getter
+    private ResourceService resourceService;
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         String fileId = exchange.getRequestURI().getPath();
-        InputStream inputStream = getFile(fileId);
+        log.info("Process request file:" + fileId);
+        InputStream inputStream = getResourceService().get(fileId);
         if (inputStream == null) {
             String response = "Error 404 File not found.";
             exchange.sendResponseHeaders(404, response.length());
@@ -41,9 +47,4 @@ public class StaticHttpHandler implements HttpHandler {
             inputStream.close();
         }
     }
-
-    private InputStream getFile(String fileId) {
-        return getResourceService().get(fileId);
-    }
-
 }

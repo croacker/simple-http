@@ -1,14 +1,14 @@
 package ru.croc.test.http;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.RequestContext;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.fileupload.RequestContext;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,13 +18,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.httpserver.HttpServer;
-
 /**
  *
  */
+@Component
+@Slf4j
 public class UploadHttpHandler implements HttpHandler {
 
     @Override
@@ -46,7 +44,7 @@ public class UploadHttpHandler implements HttpHandler {
 
     private void uploadFile(final HttpExchange httpExchange){
         for(Map.Entry<String, List<String>> header : httpExchange.getRequestHeaders().entrySet()) {
-            System.out.println(header.getKey() + ": " + header.getValue().get(0));
+            log.info(header.getKey() + ": " + header.getValue().get(0));
         }
         DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
 
@@ -88,12 +86,12 @@ public class UploadHttpHandler implements HttpHandler {
                 String json = gson.toJson(results);
                 outputStream.write(json.getBytes());
 
-                System.out.println("File-Item: " + fileItem.getFieldName() + " = " + fileItem.getName());
+                log.info("File-Item: " + fileItem.getFieldName() + " = " + fileItem.getName());
             }
             outputStream.close();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
     }
 

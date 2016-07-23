@@ -2,6 +2,10 @@ package ru.croc.test.http;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.croc.test.service.HtmlService;
 
 import java.io.IOException;
@@ -11,11 +15,12 @@ import java.io.OutputStream;
 /**
  *
  */
+@Component
+@Slf4j
 public class IndexHttpHandler implements HttpHandler {
 
-    private HtmlService getHtmlService(){
-        return HtmlService.getInstance();
-    }
+    @Autowired @Getter
+    private HtmlService htmlService;
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
