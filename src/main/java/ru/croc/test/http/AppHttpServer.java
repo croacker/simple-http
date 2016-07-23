@@ -38,7 +38,7 @@ public class AppHttpServer {
         routes.put("/js", new StaticHttpHandler());
         routes.put("/fonts", new StaticHttpHandler());
         routes.put("/img", new StaticHttpHandler());
-        port = Integer.parseInt(getConfigurationService().get("server.port"));
+        port = Integer.parseInt(getConfigurationService().get(ConfigurationService.Keys.PORT));
     }
 
     private HttpServer createServer() throws IOException {

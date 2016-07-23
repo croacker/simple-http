@@ -14,6 +14,11 @@ public class ConfigurationService{
 
     public static final String APP_PROPERTIES = "/application.properties";
 
+    public static class Keys{
+        public static final String PORT = "server.port";
+        public static final String UPLOAD_FOLDER = "server.upload.folder";
+    }
+
     private static ConfigurationService instance;
 
     private Map<String, String> properties;
