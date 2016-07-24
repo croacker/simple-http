@@ -1,5 +1,6 @@
 package ru.croc.test;
 
+import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -27,5 +28,10 @@ public class ContextConfiguration {
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
+    }
+
+    @Bean
+    public Gson gson(){
+        return new Gson();
     }
 }

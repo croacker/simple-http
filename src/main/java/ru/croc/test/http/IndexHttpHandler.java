@@ -1,5 +1,6 @@
 package ru.croc.test.http;
 
+import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import lombok.Getter;
@@ -22,8 +23,12 @@ public class IndexHttpHandler implements HttpHandler {
     @Autowired @Getter
     private HtmlService htmlService;
 
+    @Autowired @Getter
+    private Gson gson;
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+        log.info("Process request:" + getGson().toJson(httpExchange.getRequestHeaders()));
         httpExchange.sendResponseHeaders(200, 0);
         OutputStream outputStream = httpExchange.getResponseBody();
         InputStream inputStream = getHtmlService().getIndex();

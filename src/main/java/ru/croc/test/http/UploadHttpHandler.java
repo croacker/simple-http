@@ -3,11 +3,13 @@ package ru.croc.test.http;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.RequestContext;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -25,8 +27,13 @@ import java.util.Map;
 @Slf4j
 public class UploadHttpHandler implements HttpHandler {
 
+    @Autowired
+    @Getter
+    private Gson gson;
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+        log.info("Process request:" + getGson().toJson(httpExchange.getRequestHeaders()));
         if(httpExchange.getRequestMethod().equals("POST")){
             uploadFile(httpExchange);
         }else {
