@@ -15,6 +15,10 @@ public class AsposeService {
         return ConfigurationService.getInstance();
     }
 
+    public File processFile(String fileName){
+        return processFile(new File(fileName));
+    }
+
     public File processFile(File file){
         return file;
     }
