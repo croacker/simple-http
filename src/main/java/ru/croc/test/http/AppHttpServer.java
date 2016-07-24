@@ -50,6 +50,7 @@ public class AppHttpServer {
         routes.put("/js", getContext().getBean(StaticHttpHandler.class));
         routes.put("/fonts", getContext().getBean(StaticHttpHandler.class));
         routes.put("/img", getContext().getBean(StaticHttpHandler.class));
+        routes.put("/file", getContext().getBean(FieleHttpHandler.class));
     }
 
     private HttpServer createServer() throws IOException {

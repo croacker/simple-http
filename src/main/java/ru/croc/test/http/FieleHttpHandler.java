@@ -5,28 +5,31 @@ import com.sun.net.httpserver.HttpHandler;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.croc.test.service.ResourceService;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 /**
  *
  */
 @Component
 @Slf4j
-public class StaticHttpHandler implements HttpHandler {
+public class FieleHttpHandler implements HttpHandler {
 
     @Autowired @Getter
     private ResourceService resourceService;
+
+    @Value("${server.pdf.folder}")
+    @Getter
+    private String pdfFolder;
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String fileId = httpExchange.getRequestURI().getPath();
         log.info("Process request file:" + fileId);
-        InputStream inputStream = getResourceService().get(fileId);
+        InputStream inputStream = getFileStream(fileId);
         if (inputStream != null) {
             httpExchange.sendResponseHeaders(200, 0);
             OutputStream output = httpExchange.getResponseBody();
@@ -41,6 +44,20 @@ public class StaticHttpHandler implements HttpHandler {
         }else {
             writeError(httpExchange);
         }
+    }
+
+    private InputStream getFileStream(String fileId){
+        InputStream inputStream = null;
+        String fileName = getPdfFolder() + fileId.replace("file/", "");
+        File file = new File(fileName);
+        if(file.exists()){
+            try {
+                inputStream = new FileInputStream(file);
+            } catch (FileNotFoundException e) {
+                log.error(e.getMessage(), e);
+            }
+        }
+        return inputStream;
     }
 
     protected void writeError(HttpExchange httpExchange) throws IOException {
