@@ -1,5 +1,6 @@
 package ru.croc.test.http;
 
+import com.google.common.io.Files;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -38,6 +39,7 @@ public class UploadHttpHandler implements HttpHandler {
     private Gson gson;
 
     @Autowired
+    @Getter
     private AsposeService asposeService;
 
 
@@ -67,18 +69,23 @@ public class UploadHttpHandler implements HttpHandler {
 
         try {
             ServletFileUpload servletFileUpload = new ServletFileUpload(diskFileItemFactory);
-            List<FileItem> result = servletFileUpload.parseRequest(getRequestContext(httpExchange));
+            List<FileItem> fileItems = servletFileUpload.parseRequest(getRequestContext(httpExchange));
 
             httpExchange.getResponseHeaders().add("Content-type", "text/plain");
             httpExchange.sendResponseHeaders(200, 0);
             OutputStream outputStream = httpExchange.getResponseBody();
 
-            for (FileItem fileItem : result) {
+            for (FileItem fileItem : fileItems) {
+                String result;
 
-                File file = asposeService.processFile(fileItem.getName(), fileItem.getInputStream());
-                String json = getUploadResult(file);
-                outputStream.write(json.getBytes());
+                if(supportedFileExtension(fileItem.getName())){
+                    File file = getAsposeService().processFile(fileItem.getName(), fileItem.getInputStream());
+                    result = getUploadResult(file);
+                }else {
+                    result = getErrorResultFileExtension(Files.getFileExtension(fileItem.getName()).toLowerCase());
+                }
 
+                outputStream.write(result.getBytes());
                 log.info("File-Item: " + fileItem.getFieldName() + " = " + fileItem.getName());
             }
             outputStream.close();
@@ -86,6 +93,11 @@ public class UploadHttpHandler implements HttpHandler {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
+    }
+
+    private boolean supportedFileExtension(String fileName) {
+        String fileExtension = Files.getFileExtension(fileName).toLowerCase();
+        return fileExtension.equals("doc") || fileExtension.equals("docx");
     }
 
     private String getUploadResult(File file) {
@@ -102,6 +114,18 @@ public class UploadHttpHandler implements HttpHandler {
         Map<String, List> results = new HashMap<String, List>();
         results.put("files", uploarResuts);
 
+        return getGson().toJson(results);
+    }
+
+    private String getErrorResultFileExtension(String fileExtension){
+        return getUploadResuls(new UploarResut().error(" Расширение: " + fileExtension + ", не поддерживается! Только doc и docx"));
+    }
+
+    private String getUploadResuls(UploarResut resut){
+        List<UploarResut> uploarResuts = new ArrayList<UploarResut>();
+        uploarResuts.add(resut);
+        Map<String, List> results = new HashMap<String, List>();
+        results.put("files", uploarResuts);
         return getGson().toJson(results);
     }
 
@@ -139,18 +163,21 @@ public class UploadHttpHandler implements HttpHandler {
         private String deleteUrl = StringUtil.EMPTY;
         @Getter
         @Setter
-        private String name = "Go5A302w7os.jpg";
+        private String name = StringUtil.EMPTY;
         @Getter
         @Setter
-        private long size = 230268;
+        private long size = 0;
         @Getter
         @Setter
-        private String thumbnailUrl = "http://jquery-file-upload.appspot.com/image%2Fjpeg/2048386607/Go5A302w7os.jpg.80x80.jpg";
+        private String thumbnailUrl = StringUtil.EMPTY;
         @Getter
         @Setter
-        private String type = "image/jpeg";
+        private String type = StringUtil.EMPTY;
         @Getter
         @Setter
-        private String url = "http://jquery-file-upload.appspot.com/image%2Fjpeg/2048386607/Go5A302w7os.jpg";
+        private String url = StringUtil.EMPTY;
+        @Getter
+        @Setter
+        private String error = StringUtil.EMPTY;
     }
 }
