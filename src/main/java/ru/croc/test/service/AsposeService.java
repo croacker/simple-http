@@ -99,6 +99,9 @@ public class AsposeService {
         if(file.exists()){
             file.delete();
         }
+        if (!file.getParentFile().exists()){
+            file.getParentFile().mkdirs();
+        }
     }
 
     private void copyedFromKsed(InputStream source, OutputStream destination) {
