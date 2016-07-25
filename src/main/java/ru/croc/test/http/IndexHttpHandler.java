@@ -5,6 +5,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.croc.test.service.HtmlService;
@@ -37,7 +38,7 @@ public class IndexHttpHandler implements HttpHandler {
         while ((count = inputStream.read(buffer)) >= 0) {
             outputStream.write(buffer,0,count);
         }
-        inputStream.close();
-        outputStream.close();
+        IOUtils.closeQuietly(inputStream);
+        IOUtils.closeQuietly(outputStream);
     }
 }

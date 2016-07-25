@@ -1,5 +1,6 @@
 package ru.croc.test.service;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -9,6 +10,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import com.google.common.io.Files;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -42,14 +44,18 @@ public class AsposeService {
     public File processFile(String fileName) {
         File result = null;
         if(sourceExists(fileName)) {
+            InputStream inputStream = null;
             try {
-                InputStream inputStream = new FileInputStream(fileName);
+                inputStream = new FileInputStream(fileName);
                 result = processFile(fileName, inputStream);
                 log.info("Created result pdf-file: " + result.getAbsolutePath());
+                IOUtils.closeQuietly();
             } catch (FileNotFoundException e) {
                 log.error(e.getMessage(), e);
             } catch (IOException e) {
                 log.error(e.getMessage(), e);
+            }finally {
+                IOUtils.closeQuietly(inputStream);
             }
         }else {
             log.error("File: "+ fileName + " NOT found. Exception!");
@@ -67,11 +73,14 @@ public class AsposeService {
     }
 
     private File convertToPdf(String targetFileName, InputStream inputStream){
+        OutputStream outputStream = null;
         try{
-            OutputStream outputStream = new FileOutputStream(targetFileName);
+            outputStream = new FileOutputStream(targetFileName);
             copyedFromKsed(inputStream, outputStream);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
+        }finally {
+            IOUtils.closeQuietly(outputStream);
         }
         File targetFile = new File(targetFileName);
         return targetFile;

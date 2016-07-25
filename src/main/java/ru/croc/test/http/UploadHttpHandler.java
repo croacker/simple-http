@@ -12,6 +12,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.RequestContext;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -56,9 +57,9 @@ public class UploadHttpHandler implements HttpHandler {
     private void addError(HttpExchange httpExchange) throws IOException {
         String response = "Upload file!";
         httpExchange.sendResponseHeaders(200, response.length());
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+        OutputStream outputStream = httpExchange.getResponseBody();
+        outputStream.write(response.getBytes());
+        IOUtils.closeQuietly(outputStream);
     }
 
     private void uploadFile(HttpExchange httpExchange) {
@@ -88,8 +89,7 @@ public class UploadHttpHandler implements HttpHandler {
                 outputStream.write(result.getBytes());
                 log.info("File-Item: " + fileItem.getFieldName() + " = " + fileItem.getName());
             }
-            outputStream.close();
-
+            IOUtils.closeQuietly(outputStream);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }

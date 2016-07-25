@@ -4,6 +4,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.croc.test.service.ResourceService;
@@ -36,8 +37,9 @@ public class StaticHttpHandler implements HttpHandler {
                 output.write(buffer, 0, count);
             }
             output.flush();
-            output.close();
-            inputStream.close();
+            IOUtils.closeQuietly(output);
+            IOUtils.closeQuietly(inputStream);
+
         }else {
             writeError(httpExchange);
         }
@@ -49,6 +51,6 @@ public class StaticHttpHandler implements HttpHandler {
         OutputStream output = httpExchange.getResponseBody();
         output.write(response.getBytes());
         output.flush();
-        output.close();
+        IOUtils.closeQuietly(output);
     }
 }
