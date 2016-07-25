@@ -427,12 +427,12 @@
                 return '';
             }
             if (bytes >= 1000000000) {
-                return (bytes / 1000000000).toFixed(2) + ' GB';
+                return (bytes / 1000000000).toFixed(2) + ' Гб';
             }
             if (bytes >= 1000000) {
-                return (bytes / 1000000).toFixed(2) + ' MB';
+                return (bytes / 1000000).toFixed(2) + ' Мб';
             }
-            return (bytes / 1000).toFixed(2) + ' KB';
+            return (bytes / 1000).toFixed(2) + ' Кб';
         },
 
         _formatBitrate: function (bits) {
@@ -440,15 +440,15 @@
                 return '';
             }
             if (bits >= 1000000000) {
-                return (bits / 1000000000).toFixed(2) + ' Gbit/s';
+                return (bits / 1000000000).toFixed(2) + ' Гбит/сек';
             }
             if (bits >= 1000000) {
-                return (bits / 1000000).toFixed(2) + ' Mbit/s';
+                return (bits / 1000000).toFixed(2) + ' Мбит/сек';
             }
             if (bits >= 1000) {
-                return (bits / 1000).toFixed(2) + ' kbit/s';
+                return (bits / 1000).toFixed(2) + ' кбит/сек';
             }
-            return bits.toFixed(2) + ' bit/s';
+            return bits.toFixed(2) + ' бит/сек';
         },
 
         _formatTime: function (seconds) {

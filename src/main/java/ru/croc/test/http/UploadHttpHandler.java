@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.croc.test.service.AsposeService;
+import ru.croc.test.util.StringUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -90,8 +91,7 @@ public class UploadHttpHandler implements HttpHandler {
     private String getUploadResult(File file) {
         UploarResut resut = new UploarResut();
         if (file != null && file.exists()) {
-            resut.deleteUrl(file.getName())
-                    .name("file/" + file.getName())
+            resut.name(file.getName())
                     .size(file.length())
                     .thumbnailUrl("file/" + file.getName())
                     .type("application/pdf")
@@ -136,7 +136,7 @@ public class UploadHttpHandler implements HttpHandler {
         private String deleteType = "DELETE";
         @Getter
         @Setter
-        private String deleteUrl = "http://jquery-file-upload.appspot.com/image%2Fjpeg/2048386607/Go5A302w7os.jpg";
+        private String deleteUrl = StringUtil.EMPTY;
         @Getter
         @Setter
         private String name = "Go5A302w7os.jpg";

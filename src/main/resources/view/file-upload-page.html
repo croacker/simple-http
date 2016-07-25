@@ -136,20 +136,20 @@
         <td>
             <span class="preview">
                 {% if (file.thumbnailUrl) { %}
-                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}"  target="_blank" data-gallery><i class="glyphicon glyphicon-book"></a>
+                    <a href="{%=file.url%}" title="{%=file.name%}" target="_blank"><i class="glyphicon glyphicon-book"></a>
                 {% } %}
             </span>
         </td>
         <td>
             <p class="name">
                 {% if (file.url) { %}
-                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+                    <a href="{%=file.url%}" title="{%=file.name%}" target="_blank">{%=file.name%}</a>
                 {% } else { %}
                     <span>{%=file.name%}</span>
                 {% } %}
             </p>
             {% if (file.error) { %}
-                <div><span class="label label-danger">Ошибка</span> {%=file.error%}</div>
+                <div><span class="label label-danger">Ошибка</span>{%=file.error%}</div>
             {% } %}
         </td>
         <td>
