@@ -34,8 +34,9 @@ public class AsposeTestEntrypoint {
         if(!StringUtil.isEmpty(fileName)){
             log.info("Convert file:" + fileName + " to pdf...");
             getContext().getBean(AsposeService.class).processFile(fileName);
+        }else {
+            getContext().getBean(AsposeService.class).processFile(fileName);
         }
-
     }
 
     private void start() throws IOException {

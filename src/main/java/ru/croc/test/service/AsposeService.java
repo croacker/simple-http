@@ -1,6 +1,8 @@
 package ru.croc.test.service;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,11 +40,21 @@ public class AsposeService {
     private String fontFolder;
 
     public File processFile(String fileName) {
-        return processFile(new File(fileName));
-    }
-
-    public File processFile(File file) {
-        return file;
+        File result = null;
+        if(sourceExists(fileName)) {
+            try {
+                InputStream inputStream = new FileInputStream(fileName);
+                result = processFile(fileName, inputStream);
+                log.info("Created result pdf-file: " + result.getAbsolutePath());
+            } catch (FileNotFoundException e) {
+                log.error(e.getMessage(), e);
+            } catch (IOException e) {
+                log.error(e.getMessage(), e);
+            }
+        }else {
+            log.error("File: "+ fileName + " NOT found. Exception!");
+        }
+        return result;
     }
 
     public File processFile(String fileName, InputStream inputStream) throws IOException {
@@ -63,6 +75,10 @@ public class AsposeService {
         }
         File targetFile = new File(targetFileName);
         return targetFile;
+    }
+
+    private boolean sourceExists(String fileName) {
+        return new File(fileName).exists();
     }
 
     private String getTargetFileName(String fileName){
