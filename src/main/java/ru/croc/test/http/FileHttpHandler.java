@@ -15,9 +15,8 @@ import java.io.*;
 /**
  *
  */
-@Component
 @Slf4j
-public class FieleHttpHandler implements HttpHandler {
+public abstract class FileHttpHandler implements HttpHandler {
 
     @Autowired @Getter
     private ResourceService resourceService;
@@ -30,7 +29,7 @@ public class FieleHttpHandler implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
         String fileId = httpExchange.getRequestURI().getPath();
         log.info("Process request file:" + fileId);
-        InputStream inputStream = getFileStream(fileId);
+        InputStream inputStream = getStream(fileId);
         if (inputStream != null) {
             httpExchange.sendResponseHeaders(200, 0);
             OutputStream output = httpExchange.getResponseBody();
@@ -47,19 +46,7 @@ public class FieleHttpHandler implements HttpHandler {
         }
     }
 
-    private InputStream getFileStream(String fileId){
-        InputStream inputStream = null;
-        String fileName = getPdfFolder() + fileId.replace("file/", "");
-        File file = new File(fileName);
-        if(file.exists()){
-            try {
-                inputStream = new FileInputStream(file);
-            } catch (FileNotFoundException e) {
-                log.error(e.getMessage(), e);
-            }
-        }
-        return inputStream;
-    }
+    protected abstract InputStream getStream(String fileId);
 
     protected void writeError(HttpExchange httpExchange) throws IOException {
         String response = "Error 404 File not found.";

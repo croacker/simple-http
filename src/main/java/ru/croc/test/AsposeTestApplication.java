@@ -13,7 +13,7 @@ import java.io.IOException;
  *
  */
 @Slf4j
-public class AsposeTestEntrypoint {
+public class AsposeTestApplication {
 
     private static ApplicationContext getContext() {
         return ContextLoader.getInstance().getContext();
@@ -21,7 +21,7 @@ public class AsposeTestEntrypoint {
 
     public static void main(String[] args) throws IOException {
         loadContext();
-        AsposeTestEntrypoint application = getContext().getBean(AsposeTestEntrypoint.class);
+        AsposeTestApplication application = getContext().getBean(AsposeTestApplication.class);
         if (args.length != 0){
             application.processCommandline(args);
         }else {

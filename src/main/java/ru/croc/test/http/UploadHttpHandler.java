@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  *
  */
-@Component
+@Component("uploadHttpHandler")
 @Slf4j
 public class UploadHttpHandler implements HttpHandler {
 

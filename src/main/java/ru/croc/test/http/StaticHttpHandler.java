@@ -16,41 +16,16 @@ import java.io.OutputStream;
 /**
  *
  */
-@Component
+@Component("staticHttpHandler")
 @Slf4j
-public class StaticHttpHandler implements HttpHandler {
+public class StaticHttpHandler extends FileHttpHandler {
 
     @Autowired @Getter
     private ResourceService resourceService;
 
     @Override
-    public void handle(HttpExchange httpExchange) throws IOException {
-        String fileId = httpExchange.getRequestURI().getPath();
-        log.info("Process request file:" + fileId);
-        InputStream inputStream = getResourceService().get(fileId);
-        if (inputStream != null) {
-            httpExchange.sendResponseHeaders(200, 0);
-            OutputStream output = httpExchange.getResponseBody();
-            final byte[] buffer = new byte[0x10000];
-            int count;
-            while ((count = inputStream.read(buffer)) >= 0) {
-                output.write(buffer, 0, count);
-            }
-            output.flush();
-            IOUtils.closeQuietly(output);
-            IOUtils.closeQuietly(inputStream);
-
-        }else {
-            writeError(httpExchange);
-        }
+    protected InputStream getStream(String fileId){
+        return getResourceService().get(fileId);
     }
 
-    protected void writeError(HttpExchange httpExchange) throws IOException {
-        String response = "Error 404 File not found.";
-        httpExchange.sendResponseHeaders(404, response.length());
-        OutputStream output = httpExchange.getResponseBody();
-        output.write(response.getBytes());
-        output.flush();
-        IOUtils.closeQuietly(output);
-    }
 }

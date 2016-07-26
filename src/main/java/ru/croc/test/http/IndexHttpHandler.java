@@ -17,7 +17,7 @@ import java.io.OutputStream;
 /**
  *
  */
-@Component
+@Component("indexHttpHandler")
 @Slf4j
 public class IndexHttpHandler implements HttpHandler {
 
