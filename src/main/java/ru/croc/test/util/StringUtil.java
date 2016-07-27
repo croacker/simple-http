@@ -13,11 +13,4 @@ public class StringUtil {
         return Strings.isNullOrEmpty(str);
     }
 
-    public static String asNotNull(String str){
-        if (isEmpty(str)){
-            str = EMPTY;
-        }
-        return str;
-    }
-
 }
