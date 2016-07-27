@@ -1,6 +1,5 @@
 package ru.croc.test.service;
 
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -8,11 +7,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import com.google.common.io.Files;
-import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 
 import com.aspose.words.BorderCollection;
 import com.aspose.words.Document;
@@ -22,9 +16,13 @@ import com.aspose.words.NodeCollection;
 import com.aspose.words.NodeType;
 import com.aspose.words.PdfSaveOptions;
 import com.aspose.words.Shape;
-
+import com.google.common.io.Files;
+import lombok.Cleanup;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 /**
  *
@@ -44,18 +42,13 @@ public class AsposeService {
     public File processFile(String fileName) {
         File result = null;
         if(sourceExists(fileName)) {
-            InputStream inputStream = null;
             try {
-                inputStream = new FileInputStream(fileName);
+                @Cleanup InputStream inputStream = new FileInputStream(fileName);
                 result = processFile(fileName, inputStream);
                 log.info("Created result pdf-file: " + result.getAbsolutePath());
                 IOUtils.closeQuietly();
-            } catch (FileNotFoundException e) {
+            } catch (Exception e) {
                 log.error(e.getMessage(), e);
-            } catch (IOException e) {
-                log.error(e.getMessage(), e);
-            }finally {
-                IOUtils.closeQuietly(inputStream);
             }
         }else {
             log.error("File: "+ fileName + " NOT found. Exception!");
@@ -73,14 +66,11 @@ public class AsposeService {
     }
 
     private File convertToPdf(String targetFileName, InputStream inputStream){
-        OutputStream outputStream = null;
         try{
-            outputStream = new FileOutputStream(targetFileName);
+            @Cleanup OutputStream outputStream = new FileOutputStream(targetFileName);
             copyedFromKsed(inputStream, outputStream);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
-        }finally {
-            IOUtils.closeQuietly(outputStream);
         }
         File targetFile = new File(targetFileName);
         return targetFile;
@@ -104,13 +94,18 @@ public class AsposeService {
         }
     }
 
+    /**
+     * Метод скопированый из приложения ТН
+     * @param source
+     * @param destination
+     */
     private void copyedFromKsed(InputStream source, OutputStream destination) {
         try {
             final Document attachment = new Document(source, null);
-            FontSettings fs = new FontSettings();
-            fs.setFontsFolder(fontFolder, true);
-            fs.setDefaultFontName("Franklin Gothic Book");
-            attachment.setFontSettings(fs);
+            FontSettings fontSettings = new FontSettings();
+            fontSettings.setFontsFolder(fontFolder, true);
+            fontSettings.setDefaultFontName("Franklin Gothic Book");
+            attachment.setFontSettings(fontSettings);
             /**
              * Начало блока кода отладки. Убрать при отсутствии в логах сообщений после периода эксплуатации
              */

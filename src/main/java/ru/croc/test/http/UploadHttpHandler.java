@@ -4,6 +4,7 @@ import com.google.common.io.Files;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import lombok.Cleanup;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -57,9 +58,8 @@ public class UploadHttpHandler implements HttpHandler {
     private void addError(HttpExchange httpExchange) throws IOException {
         String response = "Upload file!";
         httpExchange.sendResponseHeaders(200, response.length());
-        OutputStream outputStream = httpExchange.getResponseBody();
+        @Cleanup OutputStream outputStream = httpExchange.getResponseBody();
         outputStream.write(response.getBytes());
-        IOUtils.closeQuietly(outputStream);
     }
 
     private void uploadFile(HttpExchange httpExchange) {
@@ -74,7 +74,7 @@ public class UploadHttpHandler implements HttpHandler {
 
             httpExchange.getResponseHeaders().add("Content-type", "text/plain");
             httpExchange.sendResponseHeaders(200, 0);
-            OutputStream outputStream = httpExchange.getResponseBody();
+            @Cleanup OutputStream outputStream = httpExchange.getResponseBody();
 
             for (FileItem fileItem : fileItems) {
                 String result;
@@ -89,7 +89,6 @@ public class UploadHttpHandler implements HttpHandler {
                 outputStream.write(result.getBytes());
                 log.info("File-Item: " + fileItem.getFieldName() + " = " + fileItem.getName());
             }
-            IOUtils.closeQuietly(outputStream);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }

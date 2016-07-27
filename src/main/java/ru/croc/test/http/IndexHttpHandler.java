@@ -3,6 +3,7 @@ package ru.croc.test.http;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import lombok.Cleanup;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -31,14 +32,12 @@ public class IndexHttpHandler implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
         log.info("Process request:" + getGson().toJson(httpExchange.getRequestHeaders()));
         httpExchange.sendResponseHeaders(200, 0);
-        OutputStream outputStream = httpExchange.getResponseBody();
-        InputStream inputStream = getHtmlService().getIndex();
+        @Cleanup OutputStream outputStream = httpExchange.getResponseBody();
+        @Cleanup InputStream inputStream = getHtmlService().getIndex();
         final byte[] buffer = new byte[0x10000];
         int count;
         while ((count = inputStream.read(buffer)) >= 0) {
             outputStream.write(buffer,0,count);
         }
-        IOUtils.closeQuietly(inputStream);
-        IOUtils.closeQuietly(outputStream);
     }
 }
