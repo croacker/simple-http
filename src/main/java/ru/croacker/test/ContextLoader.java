@@ -1,4 +1,4 @@
-package ru.croc.test;
+package ru.croacker.test;
 
 import lombok.Getter;
 import org.springframework.context.ApplicationContext;

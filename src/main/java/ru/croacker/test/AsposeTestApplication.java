@@ -1,11 +1,11 @@
-package ru.croc.test;
+package ru.croacker.test;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
-import ru.croc.test.http.AppHttpServer;
-import ru.croc.test.service.AsposeService;
-import ru.croc.test.service.CommandLineService;
-import ru.croc.test.util.StringUtil;
+import ru.croacker.test.service.CommandLineService;
+import ru.croacker.test.util.StringUtil;
+import ru.croacker.test.http.AppHttpServer;
+import ru.croacker.test.service.AsposeService;
 
 import java.io.IOException;
 

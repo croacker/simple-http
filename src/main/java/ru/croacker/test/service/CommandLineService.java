@@ -1,9 +1,9 @@
-package ru.croc.test.service;
+package ru.croacker.test.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.cli.*;
 import org.springframework.stereotype.Service;
-import ru.croc.test.util.StringUtil;
+import ru.croacker.test.util.StringUtil;
 
 import java.util.Arrays;
 

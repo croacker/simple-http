@@ -1,19 +1,17 @@
-package ru.croc.test.http;
+package ru.croacker.test.http;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
-import ru.croc.test.ContextLoader;
+import ru.croacker.test.ContextLoader;
 
 /**
  *

@@ -1,4 +1,4 @@
-package ru.croc.test.service;
+package ru.croacker.test.service;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;

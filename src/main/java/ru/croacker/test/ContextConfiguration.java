@@ -1,21 +1,17 @@
-package ru.croc.test;
+package ru.croacker.test;
 
 import com.google.gson.Gson;
-import com.sun.net.httpserver.HttpHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  *
  */
 @Configuration
-@ComponentScan(basePackages = {"ru.croc.test.http", "ru.croc.test.service"})
+@ComponentScan(basePackages = {"ru.croacker.test.http", "ru.croacker.test.service"})
 @PropertySource("classpath:/application.properties")
 public class ContextConfiguration {
 

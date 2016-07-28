@@ -1,3 +1,6 @@
+Simple http-server.
+
+
 For build application:
 mvn clean package appassembler:assemble
 

@@ -1,4 +1,4 @@
-package ru.croc.test.http;
+package ru.croacker.test.http;
 
 import com.google.common.io.Files;
 import com.google.gson.Gson;
@@ -13,12 +13,10 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.RequestContext;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import ru.croc.test.service.AsposeService;
-import ru.croc.test.util.StringUtil;
+import ru.croacker.test.service.AsposeService;
+import ru.croacker.test.util.StringUtil;
 
 import java.io.File;
 import java.io.IOException;

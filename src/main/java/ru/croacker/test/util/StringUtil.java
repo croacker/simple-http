@@ -1,4 +1,4 @@
-package ru.croc.test.util;
+package ru.croacker.test.util;
 
 import com.google.common.base.Strings;
 

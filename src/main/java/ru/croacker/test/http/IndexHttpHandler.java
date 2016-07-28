@@ -1,4 +1,4 @@
-package ru.croc.test.http;
+package ru.croacker.test.http;
 
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
@@ -6,10 +6,9 @@ import com.sun.net.httpserver.HttpHandler;
 import lombok.Cleanup;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.croc.test.service.HtmlService;
+import ru.croacker.test.service.HtmlService;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,4 +1,4 @@
-package ru.croc.test.http;
+package ru.croacker.test.http;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
