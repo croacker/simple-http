@@ -1,1 +1,1 @@
- mvn package appassembler:assemble
+ mvn clean package appassembler:assemble
