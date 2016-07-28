@@ -141,10 +141,8 @@
                         <platform>unix</platform>
                         <platform>windows</platform>
                     </platforms>
-
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 
