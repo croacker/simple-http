@@ -5,6 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.croc.test</groupId>
     <artifactId>aspose-test</artifactId>
+    <description>Application for test convert DOC and DOCX to PDF</description>
     <version>0.1</version>
 
     <properties>
@@ -56,13 +57,11 @@
             <artifactId>commons-io</artifactId>
             <version>${commons.io.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${springframework.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -79,7 +78,6 @@
             <artifactId>commons-cli</artifactId>
             <version>${commons.cli.version}</version>
         </dependency>
-
         <!--Asspose-->
         <dependency>
             <groupId>com.aspose.words</groupId>
@@ -88,7 +86,6 @@
             <classifier>jdk16</classifier>
         </dependency>
         <!--Asspose-->
-
     </dependencies>
 
     <build>
