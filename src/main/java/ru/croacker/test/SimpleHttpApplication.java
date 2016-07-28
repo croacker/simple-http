@@ -13,7 +13,7 @@ import java.io.IOException;
  *
  */
 @Slf4j
-public class AsposeTestApplication {
+public class SimpleHttpApplication {
 
     private static ApplicationContext getContext() {
         return ContextLoader.getInstance().getContext();
@@ -21,7 +21,7 @@ public class AsposeTestApplication {
 
     public static void main(String[] args) throws IOException {
         loadContext();
-        AsposeTestApplication application = getContext().getBean(AsposeTestApplication.class);
+        SimpleHttpApplication application = getContext().getBean(SimpleHttpApplication.class);
         if (args.length != 0){
             application.processCommandline(args);
         }else {

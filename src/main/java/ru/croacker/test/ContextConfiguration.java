@@ -16,8 +16,8 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 public class ContextConfiguration {
 
     @Bean
-    public AsposeTestApplication asposeTestEntrypoint(){
-        return new AsposeTestApplication();
+    public SimpleHttpApplication asposeTestEntrypoint(){
+        return new SimpleHttpApplication();
     }
 
     @Bean
