@@ -15,7 +15,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.croacker.test.service.AsposeService;
+import ru.croacker.test.service.UploadFileService;
 import ru.croacker.test.util.StringUtil;
 
 import java.io.File;
@@ -40,7 +40,7 @@ public class UploadHttpHandler implements HttpHandler {
 
     @Autowired
     @Getter
-    private AsposeService asposeService;
+    private UploadFileService uploadFileService;
 
 
     @Override
@@ -75,13 +75,11 @@ public class UploadHttpHandler implements HttpHandler {
             @Cleanup OutputStream outputStream = httpExchange.getResponseBody();
 
             for (FileItem fileItem : fileItems) {
-                String result;
+                String result = checkNewFile(fileItem);
 
-                if(supportedFileExtension(fileItem.getName())){
-                    File file = getAsposeService().processFile(fileItem.getName(), fileItem.getInputStream());
+                if(result == null){
+                    File file = getUploadFileService().processFile(fileItem);
                     result = getUploadResult(file);
-                }else {
-                    result = getErrorResultFileExtension(Files.getFileExtension(fileItem.getName()).toLowerCase());
                 }
 
                 outputStream.write(result.getBytes());
@@ -92,9 +90,9 @@ public class UploadHttpHandler implements HttpHandler {
         }
     }
 
-    private boolean supportedFileExtension(String fileName) {
-        String fileExtension = Files.getFileExtension(fileName).toLowerCase();
-        return fileExtension.equals("doc") || fileExtension.equals("docx");
+    private String checkNewFile(FileItem fileItem) {
+        String fileExtension = Files.getFileExtension(fileItem.getName()).toLowerCase();
+        return String.valueOf(fileExtension.equals("doc") || fileExtension.equals("docx"));
     }
 
     private String getUploadResult(File file) {

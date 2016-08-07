@@ -22,21 +22,7 @@ public class SimpleHttpApplication {
     public static void main(String[] args) throws IOException {
         loadContext();
         SimpleHttpApplication application = getContext().getBean(SimpleHttpApplication.class);
-        if (args.length != 0){
-            application.processCommandline(args);
-        }else {
-            application.start();
-        }
-    }
-
-    private void processCommandline(String...args) {
-        String fileName = getContext().getBean(CommandLineService.class).getFileName(args);
-        if(!StringUtil.isEmpty(fileName)){
-            log.info("Convert file:" + fileName + " to pdf...");
-            getContext().getBean(AsposeService.class).processFile(fileName);
-        }else {
-            getContext().getBean(AsposeService.class).processFile(fileName);
-        }
+        application.start();
     }
 
     private void start() throws IOException {
