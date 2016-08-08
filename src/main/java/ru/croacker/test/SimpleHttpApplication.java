@@ -2,10 +2,7 @@ package ru.croacker.test;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
-import ru.croacker.test.service.CommandLineService;
-import ru.croacker.test.util.StringUtil;
 import ru.croacker.test.http.AppHttpServer;
-import ru.croacker.test.service.AsposeService;
 
 import java.io.IOException;
 
