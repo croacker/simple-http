@@ -1,4 +1,4 @@
-package ru.croacker.test.http.result;
+package ru.croacker.test.service.upload;
 
 /**
  *

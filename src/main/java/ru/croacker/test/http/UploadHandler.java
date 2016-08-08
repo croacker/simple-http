@@ -6,8 +6,6 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import lombok.Cleanup;
 import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.RequestContext;
@@ -15,9 +13,8 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.croacker.test.http.result.UploarResut;
+import ru.croacker.test.service.upload.UploarResut;
 import ru.croacker.test.service.UploadFileService;
-import ru.croacker.test.util.StringUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -92,8 +89,7 @@ public class UploadHandler implements HttpHandler {
     }
 
     private String checkNewFile(FileItem fileItem) {
-        String fileExtension = Files.getFileExtension(fileItem.getName()).toLowerCase();
-        return String.valueOf(fileExtension.equals("doc") || fileExtension.equals("docx"));
+        return null;
     }
 
     private String getUploadResult(File file) {

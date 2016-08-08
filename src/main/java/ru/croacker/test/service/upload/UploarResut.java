@@ -1,15 +1,16 @@
-package ru.croacker.test.http.result;
+package ru.croacker.test.service.upload;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import ru.croacker.test.service.upload.OperationResult;
 import ru.croacker.test.util.StringUtil;
 
 /**
  *
  */
 @Accessors(fluent = true)
-public class UploarResut implements OperationResult{
+public class UploarResut implements OperationResult {
 
     @Getter
     @Setter
