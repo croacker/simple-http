@@ -13,7 +13,7 @@ import java.io.InputStream;
  */
 @Component("staticHttpHandler")
 @Slf4j
-public class StaticHttpHandler extends FileHttpHandler {
+public class StaticHandler extends FileHandler {
 
     @Autowired @Getter
     private ResourceService resourceService;

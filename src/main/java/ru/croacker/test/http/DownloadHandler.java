@@ -12,13 +12,13 @@ import java.io.InputStream;
  *
  */
 @Slf4j
-@Component("downloadHttpHandler")
-public class DownloadHttpHandler extends FileHttpHandler {
+@Component("downloadHandler")
+public class DownloadHandler extends FileHandler {
 
     @Override
     protected InputStream getStream(String fileId){
         InputStream inputStream = null;
-        String fileName = getPdfFolder() + fileId.replace("file/", "");
+        String fileName = getUploadFolder() + fileId.replace("file/", "");
         File file = new File(fileName);
         if(file.exists()){
             try {

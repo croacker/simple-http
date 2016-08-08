@@ -15,6 +15,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.croacker.test.http.result.UploarResut;
 import ru.croacker.test.service.UploadFileService;
 import ru.croacker.test.util.StringUtil;
 
@@ -32,7 +33,7 @@ import java.util.Map;
  */
 @Component("uploadHttpHandler")
 @Slf4j
-public class UploadHttpHandler implements HttpHandler {
+public class UploadHandler implements HttpHandler {
 
     @Autowired
     @Getter
@@ -146,33 +147,5 @@ public class UploadHttpHandler implements HttpHandler {
                 return httpExchange.getRequestBody();
             }
         };
-    }
-
-    @Accessors(fluent = true)
-    private static class UploarResut {
-        @Getter
-        @Setter
-        private String deleteType = "DELETE";
-        @Getter
-        @Setter
-        private String deleteUrl = StringUtil.EMPTY;
-        @Getter
-        @Setter
-        private String name = StringUtil.EMPTY;
-        @Getter
-        @Setter
-        private long size = 0;
-        @Getter
-        @Setter
-        private String thumbnailUrl = StringUtil.EMPTY;
-        @Getter
-        @Setter
-        private String type = StringUtil.EMPTY;
-        @Getter
-        @Setter
-        private String url = StringUtil.EMPTY;
-        @Getter
-        @Setter
-        private String error = StringUtil.EMPTY;
     }
 }

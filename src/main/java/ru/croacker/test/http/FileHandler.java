@@ -15,14 +15,14 @@ import java.io.*;
  *
  */
 @Slf4j
-public abstract class FileHttpHandler implements HttpHandler {
+public abstract class FileHandler implements HttpHandler {
 
     @Autowired @Getter
     private ResourceService resourceService;
 
-    @Value("${server.pdf.folder}")
+    @Value("${server.upload.folder}")
     @Getter
-    private String pdfFolder;
+    private String uploadFolder;
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {

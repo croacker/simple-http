@@ -36,13 +36,13 @@ public class AppHttpServer {
     }
 
     private void init(){
-        routes.put("/",  getContext().getBean(IndexHttpHandler.class));
-        routes.put("/upload", getContext().getBean(UploadHttpHandler.class));
-        routes.put("/css", getContext().getBean(StaticHttpHandler.class));
-        routes.put("/js", getContext().getBean(StaticHttpHandler.class));
-        routes.put("/fonts", getContext().getBean(StaticHttpHandler.class));
-        routes.put("/img", getContext().getBean(StaticHttpHandler.class));
-        routes.put("/file", getContext().getBean(DownloadHttpHandler.class));
+        routes.put("/",  getContext().getBean(IndexHandler.class));
+        routes.put("/upload", getContext().getBean(UploadHandler.class));
+        routes.put("/css", getContext().getBean(StaticHandler.class));
+        routes.put("/js", getContext().getBean(StaticHandler.class));
+        routes.put("/fonts", getContext().getBean(StaticHandler.class));
+        routes.put("/img", getContext().getBean(StaticHandler.class));
+        routes.put("/file", getContext().getBean(DownloadHandler.class));
     }
 
     private HttpServer createServer() throws IOException {

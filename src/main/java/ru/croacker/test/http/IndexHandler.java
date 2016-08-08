@@ -19,7 +19,7 @@ import java.io.OutputStream;
  */
 @Component("indexHttpHandler")
 @Slf4j
-public class IndexHttpHandler implements HttpHandler {
+public class IndexHandler implements HttpHandler {
 
     @Autowired @Getter
     private HtmlService htmlService;
