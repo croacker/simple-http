@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.croacker.test.service.upload.UploadResut;
@@ -25,11 +26,12 @@ public class UploadFileService {
     @Getter
     private String uploadFolder;
 
+    @Autowired
     @Getter
-    private FileTypeMap fileTypeMap = MimetypesFileTypeMap.getDefaultFileTypeMap();
+    private FileTypeMap fileTypeMap;
 
     public UploadResut processFile(FileItem fileItem) {
-        String fileName = "../".concat(FilenameUtils.concat("upload", FilenameUtils.getName(fileItem.getName())));
+        String fileName = "../".concat(FilenameUtils.concat(getUploadFolder(), FilenameUtils.getName(fileItem.getName())));
         File file = writeToFile(fileName, fileItem);
         return toUploadResut(file);
     }
