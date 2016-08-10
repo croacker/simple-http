@@ -3,6 +3,7 @@ package ru.croacker.test.service;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.util.Streams;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,24 +32,25 @@ public class UploadFileService {
     private FileTypeMap fileTypeMap;
 
     public UploadResut processFile(FileItem fileItem) {
-        String fileName = "../".concat(FilenameUtils.concat(getUploadFolder(), FilenameUtils.getName(fileItem.getName())));
+        String fileName =
+                "../".concat(FilenameUtils.concat(getUploadFolder(), FilenameUtils.getName(fileItem.getName())));
         File file = writeToFile(fileName, fileItem);
         return toUploadResut(file);
     }
 
-    private File getFile(String fileName){
+    private File getFile(String fileName) {
         File file = new File(fileName);
         deleteOld(file);
         return file;
     }
 
-    private void deleteOld(File file){
-        if(file.exists()){
+    private void deleteOld(File file) {
+        if (file.exists()) {
             file.delete();
         }
     }
 
-    private File writeToFile(String fileName, FileItem fileItem){
+    private File writeToFile(String fileName, FileItem fileItem) {
         File file = getFile(fileName);
         try {
             FileUtils.copyInputStreamToFile(fileItem.getInputStream(), file);
@@ -61,11 +63,12 @@ public class UploadFileService {
     private UploadResut toUploadResut(File file) {
         UploadResut resut = new UploadResut();
         if (file != null && file.exists()) {
-            resut.name(file.getName())
-                    .size(file.length())
-                    .thumbnailUrl("file/" + file.getName())
-                    .type(getFileTypeMap().getContentType(file))
+            String contentType = getFileTypeMap().getContentType(file);
+            resut.name(file.getName()).size(file.length()).type(getFileTypeMap().getContentType(file))
                     .url("file/" + file.getName());
+            if (contentType.contains("image")) {
+                resut.thumbnailUrl("file/" + file.getName());
+            }
         }
         return resut;
     }

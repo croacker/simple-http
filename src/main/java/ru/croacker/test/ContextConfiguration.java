@@ -1,6 +1,5 @@
 package ru.croacker.test;
 
-import com.google.common.annotations.Beta;
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
