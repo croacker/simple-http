@@ -7,7 +7,10 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import ru.croacker.test.service.upload.UploadResut;
 
+import javax.activation.FileTypeMap;
+import javax.activation.MimetypesFileTypeMap;
 import java.io.File;
 import java.io.IOException;
 
@@ -22,9 +25,13 @@ public class UploadFileService {
     @Getter
     private String uploadFolder;
 
-    public File processFile(FileItem fileItem) {
+    @Getter
+    private FileTypeMap fileTypeMap = MimetypesFileTypeMap.getDefaultFileTypeMap();
+
+    public UploadResut processFile(FileItem fileItem) {
         String fileName = "../".concat(FilenameUtils.concat("upload", FilenameUtils.getName(fileItem.getName())));
-        return writeToFile(fileName, fileItem);
+        File file = writeToFile(fileName, fileItem);
+        return toUploadResut(file);
     }
 
     private File getFile(String fileName){
@@ -48,4 +55,17 @@ public class UploadFileService {
         }
         return file;
     }
+
+    private UploadResut toUploadResut(File file) {
+        UploadResut resut = new UploadResut();
+        if (file != null && file.exists()) {
+            resut.name(file.getName())
+                    .size(file.length())
+                    .thumbnailUrl("file/" + file.getName())
+                    .type(getFileTypeMap().getContentType(file))
+                    .url("file/" + file.getName());
+        }
+        return resut;
+    }
+
 }

@@ -1,6 +1,5 @@
 package ru.croacker.test.http;
 
-import com.google.common.io.Files;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -13,9 +12,11 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.croacker.test.service.upload.UploarResut;
+import ru.croacker.test.service.upload.UploadResut;
 import ru.croacker.test.service.UploadFileService;
 
+import javax.activation.FileTypeMap;
+import javax.activation.MimetypesFileTypeMap;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,7 +40,6 @@ public class UploadHandler implements HttpHandler {
     @Autowired
     @Getter
     private UploadFileService uploadFileService;
-
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -76,8 +76,7 @@ public class UploadHandler implements HttpHandler {
                 String result = checkNewFile(fileItem);
 
                 if(result == null){
-                    File file = getUploadFileService().processFile(fileItem);
-                    result = getUploadResult(file);
+                    result = getUploadFileService().processFile(fileItem).toJson();
                 }
 
                 outputStream.write(result.getBytes());
@@ -90,35 +89,6 @@ public class UploadHandler implements HttpHandler {
 
     private String checkNewFile(FileItem fileItem) {
         return null;
-    }
-
-    private String getUploadResult(File file) {
-        UploarResut resut = new UploarResut();
-        if (file != null && file.exists()) {
-            resut.name(file.getName())
-                    .size(file.length())
-                    .thumbnailUrl("file/" + file.getName())
-                    .type("application/pdf")
-                    .url("file/" + file.getName());
-        }
-        List<UploarResut> uploarResuts = new ArrayList<UploarResut>();
-        uploarResuts.add(resut);
-        Map<String, List> results = new HashMap<String, List>();
-        results.put("files", uploarResuts);
-
-        return getGson().toJson(results);
-    }
-
-    private String getErrorResultFileExtension(String fileExtension){
-        return getUploadResuls(new UploarResut().error(" Расширение: " + fileExtension + ", не поддерживается! Только doc и docx"));
-    }
-
-    private String getUploadResuls(UploarResut resut){
-        List<UploarResut> uploarResuts = new ArrayList<UploarResut>();
-        uploarResuts.add(resut);
-        Map<String, List> results = new HashMap<String, List>();
-        results.put("files", uploarResuts);
-        return getGson().toJson(results);
     }
 
     private RequestContext getRequestContext(final HttpExchange httpExchange) {
