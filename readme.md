@@ -1,4 +1,4 @@
-# This simple http-server.
+# This simple http-server
 Using com.sun.net.httpserver.HttpServer and implementations of com.sun.net.httpserver.HttpHandler
 HttpHandlers using for routing
 
