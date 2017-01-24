@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <link rel="icon" type="image/png" href="./img/http.png">
+</head>
 <title>simple http-server</title>
 <link rel="stylesheet" type="text/css" href="./css/styles.css">
 <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
@@ -70,7 +73,9 @@
                 <div class="progress-extended">&nbsp;</div>
             </div>
         </div>
-        <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+        <table role="presentation" class="table table-striped">
+            <tbody class="files"></tbody>
+        </table>
     </form>
 </div>
 <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
@@ -112,6 +117,7 @@
         </td>
     </tr>
 {% } %}
+
 </script>
 <script id="template-download" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
@@ -157,6 +163,7 @@
         </td>
     </tr>
 {% } %}
+
 </script>
 
 </body>
